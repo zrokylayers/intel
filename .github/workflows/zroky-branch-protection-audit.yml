@@ -41,15 +41,10 @@ jobs:
             exit 1
           fi
 
-      - name: Authenticate gh
-        env:
-          GH_TOKEN: ${{ secrets.BRANCH_PROTECTION_AUDIT_TOKEN }}
-        run: |
-          echo "${GH_TOKEN}" | gh auth login --hostname github.com --with-token
-          gh auth status
-
       - name: Verify branch protection policy
         shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.BRANCH_PROTECTION_AUDIT_TOKEN }}
         run: |
           $owner = "${{ github.event.inputs.owner }}"
           $repo = "${{ github.event.inputs.repo }}"
